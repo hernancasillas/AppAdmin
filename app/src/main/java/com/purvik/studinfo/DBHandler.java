@@ -17,7 +17,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
     // All Static variables
     // Database Version
-    private static final int DATABASE_VERSION = 91;
+    private static final int DATABASE_VERSION = 93;
 
     // Database Name
     private static final String DATABASE_NAME = "Chambapp";
@@ -54,13 +54,6 @@ public class DBHandler extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-        /*String CREATE_STUDENT_DETAIL_TABLE = "CREATE TABLE " + TABLE_STUDENT_DETAIL + "("
-                + KEY_ID + " INTEGER PRIMARY KEY,"
-                + KEY_ENROLL_NO + " TEXT,"
-                + KEY_NAME + " TEXT,"
-                + KEY_PHONE_NO + " TEXT,"
-                + KEY_ADDRESS + " TEXT" + ")";*/
-
         String CREATE_JOB_TABLE = "CREATE TABLE " + TABLE_JOB_DETAIL + "("
                 + KEY_ID_JOB + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + KEY_JOB_NAME + " TEXT)";
@@ -79,6 +72,7 @@ public class DBHandler extends SQLiteOpenHelper {
                 + KEY_USERNAME + " TEXT, "
                 + KEY_EMAIL + " TEXT,"
                 + KEY_PASSWORD + " TEXT,"
+                + KEY_PHONE_NO + " TEXT,"
                 + KEY_USER_TYPE + " INTEGER)";
 
 
@@ -145,8 +139,8 @@ public class DBHandler extends SQLiteOpenHelper {
         values.put(KEY_FULLNAME, newUser.getUser_Name());
         values.put(KEY_USERNAME, newUser.getUser_Username());
         values.put(KEY_EMAIL, newUser.getUserEmail());
-        values.put(KEY_PHONE_NO, newUser.getUserPhone());
         values.put(KEY_PASSWORD, newUser.getUserPassword());
+        values.put(KEY_PHONE_NO, newUser.getUserPhone());
         values.put(KEY_USER_TYPE, newUser.getUserType());
 
         db.insert(TABLE_USER_DETAIL, null, values);

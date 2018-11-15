@@ -8,6 +8,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 public class Login2 extends AppCompatActivity {
 
 
@@ -21,6 +23,15 @@ public class Login2 extends AppCompatActivity {
         final EditText username2 = (EditText) findViewById(R.id.editText3);
         final EditText password2 = (EditText) findViewById(R.id.editText4);
         final Button loginButton = (Button) findViewById(R.id.botonLogin);
+        final TextView registro = (TextView) findViewById(R.id.tvRegistro);
+
+        registro.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent Registro = new Intent(Login2.this, Register.class);
+                startActivity(Registro);
+            }
+        });
 
 
 

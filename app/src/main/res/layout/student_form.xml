@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/in_between_widget_space"
-        android:text="AGREGAR PLOMERO"
+        android:text="AGREGAR TRABAJADOR"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
@@ -62,12 +62,18 @@
         android:ems="10"
         android:inputType="textPersonName" />
 
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Empleo"
+        android:textSize="18sp" />
+
     <EditText
         android:id="@+id/etEmpleoName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Empleo"
         android:inputType="textPersonName" />
 
 </LinearLayout>

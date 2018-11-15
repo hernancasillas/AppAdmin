@@ -23,13 +23,14 @@ public class Usuario {
         this.userPhone = userPhone;
     }
 
-    public Usuario(String user_Name, String user_Username, String userEmail, String userPassword, String userPhone)
+    public Usuario(String user_Name, String user_Username, String userEmail, String userPassword, String userPhone, int UserType)
     {
         this.user_Name = user_Name;
         this.user_Username = user_Username;
         this.userEmail = userEmail;
         this.userPassword = userPassword;
         this.userPhone = userPhone;
+        this.userType = UserType;
     }
 
     public int getId_user() {
