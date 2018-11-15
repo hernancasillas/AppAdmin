@@ -3,6 +3,7 @@ package com.purvik.studinfo;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
@@ -103,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements AddStudentDialog.
                     tvStdInfo.append("\n"+ stdDetail);
                 }
 
-                /*List<Worker> workerList = db.getAllStudentList();	//	fetch List of BlockedNumbers form DB  method - 'getAllBlockedNumbers'
+                List<Worker> workerList = db.getAllStudentList();	//	fetch List of BlockedNumbers form DB  method - 'getAllBlockedNumbers'
 
                 for (Worker std : workerList) {
 
@@ -112,7 +113,7 @@ public class MainActivity extends AppCompatActivity implements AddStudentDialog.
                     tvStdInfo.append("\n"+ stdDetail);
 
                     Log.i("TAG", stdDetail);
-                }*/
+                }
             }
         });
     }
@@ -145,7 +146,7 @@ public class MainActivity extends AppCompatActivity implements AddStudentDialog.
         String job = jobName.getText().toString();
 
 
-        db.addNewJob(new Job(1, job));
+        db.addNewJob(new Job(job));
 
         Log.d("HOLA", "AGRGADO");
 
@@ -155,9 +156,14 @@ public class MainActivity extends AppCompatActivity implements AddStudentDialog.
     public void onSaveButtonClick(DialogFragment dialog) {
 
         //		Get enrollNumber
-        EditText entEnrolNo = (EditText) dialog.getDialog().findViewById(R.id.edtEnrollNo);
+        /*EditText entEnrolNo = (EditText) dialog.getDialog().findViewById(R.id.edtEnrollNo);
         String enrollNo = entEnrolNo.getText().toString();
-        int idJob =Integer.parseInt(entEnrolNo.getText().toString());
+        int idJob =Integer.parseInt(entEnrolNo.getText().toString());*/
+
+        EditText etEmpleo = (EditText) dialog.getDialog().findViewById(R.id.etEmpleoName);
+        String nombreEmpleo = etEmpleo.getText().toString();
+
+        int idJOB = db.getIdJob(nombreEmpleo);
 
 //		Get Name
         EditText entName = (EditText) dialog.getDialog().findViewById(R.id.edtName);
@@ -171,25 +177,25 @@ public class MainActivity extends AppCompatActivity implements AddStudentDialog.
         String address = entAddress.getText().toString();
 
 
-        boolean check_enrollNo = checkEnrollNo(enrollNo);
+       // boolean check_enrollNo = checkEnrollNo(enrollNo);
 
         boolean check_name = checkName(name);
 
         boolean check_phnNo = checkPhoneNo(phnNo);
 
-        if(check_enrollNo == false || check_name == false || check_phnNo == false){
+        if(check_name == false || check_phnNo == false || idJOB == 0){
 
             Toast.makeText(getApplicationContext(),"Tel 10 Digitos!!!!!!",Toast.LENGTH_LONG).show();
         }else{
 
-            db.addNewWorker(new Worker(idJob, name, phnNo, address));
+            db.addNewWorker(new Worker(idJOB, name, phnNo, address));
 
             Toast.makeText(getApplicationContext(),  "Trabajador agregado",Toast.LENGTH_LONG).show();
         }
 
 
 
-        Toast.makeText(getApplicationContext(),"\nNo: " + enrollNo + "\nNombre: " + name + "\nTelefono: " + phnNo + "\nDireccion: " + address,Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(),"\nNo: " + idJOB + "\nNombre: " + name + "\nTelefono: " + phnNo + "\nDireccion: " + address,Toast.LENGTH_LONG).show();
 
 
 

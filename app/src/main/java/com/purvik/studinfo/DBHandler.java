@@ -17,7 +17,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
     // All Static variables
     // Database Version
-    private static final int DATABASE_VERSION = 84;
+    private static final int DATABASE_VERSION = 91;
 
     // Database Name
     private static final String DATABASE_NAME = "Chambapp";
@@ -31,14 +31,16 @@ public class DBHandler extends SQLiteOpenHelper {
     // Contacts Table Columns names
     private static final String KEY_ID = "id";
     private static final String KEY_ENROLL_NO = "enroll_no";
-    private static final String KEY_NAME = "name";
+    private static final String KEY_NAME = "fullName";
     private static final String KEY_PHONE_NO = "phone_number";
     private static final String KEY_ADDRESS = "address";
 
     private static final String KEY_ID_JOB = "id_job";
+    private static final String KEY_JOB_NAME = "job_name";
 
     private static final String KEY_ID_USER = "id_user";
     private static final String KEY_USERNAME = "username";
+    private static final String KEY_FULLNAME = "user_fullname";
     private static final String KEY_EMAIL = "email";
     private static final String KEY_PASSWORD = "password";
     private static final String KEY_USER_TYPE = "user_type";
@@ -61,7 +63,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
         String CREATE_JOB_TABLE = "CREATE TABLE " + TABLE_JOB_DETAIL + "("
                 + KEY_ID_JOB + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + KEY_NAME + " TEXT)";
+                + KEY_JOB_NAME + " TEXT)";
 
         String CREATE_WORKER_TABLE = "CREATE TABLE " + TABLE_WORKER_DETAIL + "("
                 + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
@@ -73,7 +75,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
         String CREATE_USER_TABLE = "CREATE TABLE " + TABLE_USER_DETAIL + "("
                 + KEY_ID_USER + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + KEY_NAME + " TEXT,"
+                + KEY_FULLNAME + " TEXT,"
                 + KEY_USERNAME + " TEXT, "
                 + KEY_EMAIL + " TEXT,"
                 + KEY_PASSWORD + " TEXT,"
@@ -127,10 +129,10 @@ public class DBHandler extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
 
-        values.put(KEY_ID_JOB, newJob.getId());
-        values.put(KEY_NAME, newJob.getName());
+        //values.put(KEY_ID_JOB, newJob.getId());
+        values.put(KEY_JOB_NAME, newJob.getName());
 
-        db.insert(TABLE_WORKER_DETAIL, null, values);
+        db.insert(TABLE_JOB_DETAIL, null, values);
         db.close();
     }
 
@@ -140,12 +142,15 @@ public class DBHandler extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
 
-        values.put(KEY_NAME, newUser.getUser_Name());
+        values.put(KEY_FULLNAME, newUser.getUser_Name());
         values.put(KEY_USERNAME, newUser.getUser_Username());
         values.put(KEY_EMAIL, newUser.getUserEmail());
         values.put(KEY_PHONE_NO, newUser.getUserPhone());
         values.put(KEY_PASSWORD, newUser.getUserPassword());
         values.put(KEY_USER_TYPE, newUser.getUserType());
+
+        db.insert(TABLE_USER_DETAIL, null, values);
+        db.close();
     }
 
 
@@ -237,6 +242,25 @@ public class DBHandler extends SQLiteOpenHelper {
 
         // return contact list
         return jobList;
+    }
+
+    public int getIdJob(String nombreEmpleo)
+    {
+        String selectQuery = "SELECT  * FROM " + "Oficio WHERE job_name="+"'"+nombreEmpleo+"'";
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        int idJOB;
+
+        if (cursor.moveToFirst()) {
+            do {
+                idJOB=Integer.parseInt(cursor.getString(0));
+                return idJOB;
+            } while (cursor.moveToNext());
+        }
+
+        return 0;
     }
 
 }
