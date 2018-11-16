@@ -17,7 +17,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
     // All Static variables
     // Database Version
-    private static final int DATABASE_VERSION = 94;
+    private static final int DATABASE_VERSION = 95;
 
     // Database Name
     private static final String DATABASE_NAME = "Chambapp";
@@ -159,12 +159,12 @@ public class DBHandler extends SQLiteOpenHelper {
 
         ContentValues args = new ContentValues();
 
-        args.put(KEY_ENROLL_NO, updEnrolNo);
+        args.put(KEY_ID_JOB, updEnrolNo);
         args.put(KEY_NAME, updName);
         args.put(KEY_PHONE_NO, updPhoneNo);
         args.put(KEY_ADDRESS, updAddress);
 
-        return db.update(TABLE_STUDENT_DETAIL, args, KEY_ID + "=" + updId, null) > 0;
+        return db.update(TABLE_WORKER_DETAIL, args, KEY_ID + "=" + updId, null) > 0;
     }
 
 
@@ -172,7 +172,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
         SQLiteDatabase db = this.getWritableDatabase();
 
-        return db.delete(TABLE_STUDENT_DETAIL, KEY_ID + "=" + delID, null) > 0;
+        return db.delete(TABLE_WORKER_DETAIL, KEY_ID + "=" + delID, null) > 0;
 
     }
 
@@ -200,6 +200,7 @@ public class DBHandler extends SQLiteOpenHelper {
                 worker.set_name(cursor.getString(2));
                 worker.set_phone_number(cursor.getString(3));
                 worker.set_address(cursor.getString(4));
+                worker.set_rating(Integer.parseInt(cursor.getString(5)));
 
                 // Adding contact to list
                 studentList.add(worker);
@@ -284,6 +285,49 @@ public class DBHandler extends SQLiteOpenHelper {
         }
 
         return "";
+    }
+
+    public List<Worker> getWorkersByJob(String name)
+    {
+        int id = 0;
+
+        String selectQuery2 = "SELECT " + KEY_ID_JOB + " FROM " + TABLE_JOB_DETAIL + " WHERE(" + KEY_JOB_NAME+ "='"+ name+"')";
+        List<Worker> workerList = new ArrayList<Worker>();
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor2 = db.rawQuery(selectQuery2, null);
+
+        if(cursor2.moveToFirst())
+        {
+            do{
+                id = Integer.parseInt(cursor2.getString(0));
+            }while(cursor2.moveToNext());
+        }
+
+        /*String selectQuery = "SELECT " + KEY_NAME  + "," + KEY_PHONE_NO + "," + KEY_ADDRESS + "," + KEY_RATING + " FROM " + TABLE_WORKER_DETAIL
+                + " WHERE(" + KEY_ID_JOB + " = SELECT " +KEY_ID_JOB + " FROM " + TABLE_JOB_DETAIL + " WHERE(" + KEY_JOB_NAME + "='" + name+"'))";*/
+        String selectQuery = "SELECT " + KEY_NAME  + "," + KEY_PHONE_NO + "," + KEY_ADDRESS + "," + KEY_RATING + " FROM " + TABLE_WORKER_DETAIL
+                + " WHERE(" + KEY_ID_JOB + "=" + id+")";
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if(cursor.moveToFirst())
+        {
+            do {
+
+                Worker worker = new Worker();
+                //worker.set_id(Integer.parseInt(cursor.getString(0)));
+                //worker.set_id_job(Integer.parseInt(cursor.getString(0)));
+                worker.set_name(cursor.getString(0));
+                worker.set_phone_number(cursor.getString(1));
+                worker.set_address(cursor.getString(2));
+                worker.set_rating(Integer.parseInt(cursor.getString(3)));
+
+                workerList.add(worker);
+
+            }while(cursor.moveToNext());
+        }
+        return workerList;
     }
 
 

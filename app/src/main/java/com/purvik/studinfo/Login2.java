@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
@@ -44,14 +45,19 @@ public class Login2 extends AppCompatActivity {
 
                 if(username.equals("admin") && password.equals("admin"))
                 {
-                    Intent Admin = new Intent(Login2.this, Categories.class);
+                    Intent Admin = new Intent(Login2.this, MainActivity.class);
                     startActivity(Admin);
                 }
-                if(username.equals("usuario"))
+                else if(username.equals("usuario"))
                 {
-                    Intent User = new Intent(Login2.this, CategoriesUser.class);
+                    Intent User = new Intent(Login2.this, UsuarioMain.class);
                     startActivity(User);
                 }
+                else
+                {
+                    Toast.makeText(getApplicationContext(),"Usuario/Contraseña Incorrectos",Toast.LENGTH_LONG).show();
+                }
+
 
             }
         });

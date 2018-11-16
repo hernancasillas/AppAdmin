@@ -325,7 +325,7 @@ public class MainActivity extends AppCompatActivity implements AddStudentDialog.
 
             if(deleCheck == true){
 
-                Toast.makeText(getApplicationContext(),"Plomero eliminado",Toast.LENGTH_LONG).show();}
+                Toast.makeText(getApplicationContext(),"Trabajador eliminado",Toast.LENGTH_LONG).show();}
             else{
 
                 Toast.makeText(getApplicationContext(),"No eliminado",Toast.LENGTH_LONG).show();
