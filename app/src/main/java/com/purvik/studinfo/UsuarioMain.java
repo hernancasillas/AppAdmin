@@ -11,6 +11,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -36,8 +39,7 @@ public class UsuarioMain extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String busqueda = search.getText().toString();
-                search.setVisibility(View.INVISIBLE);
-                boton.setVisibility(View.INVISIBLE);
+
 
                 tvStdInfo = (TextView) findViewById(R.id.lv);
                 //tvStdInfo.setVisibility(View.VISIBLE);
@@ -50,16 +52,21 @@ public class UsuarioMain extends AppCompatActivity {
 
                 List<Worker> workerList = db.getWorkersByJob(busqueda);	//	fetch List of BlockedNumbers form DB  method - 'getAllBlockedNumbers'
 
-
-
-                for (Worker std : workerList) {
-
-                    String stdDetail = "\n\tNombre: " + std.get_name() + "\n\tTelefono: "+ std.get_phone_number()
-                            + "\n\tDireccion: " + std.get_address() + "\n\tRating:"+std.get_rating();
-                    tvStdInfo.append("\n"+ stdDetail);
-
-
+                if(workerList.size() == 0)
+                {
+                    Toast.makeText(getApplicationContext(),"El trabajador que buscas, no existe. \n Intenta con otro.",Toast.LENGTH_LONG).show();
                 }
+                else{
+                    for (Worker std : workerList) {
+                        String stdDetail = "\n\tNombre: " + std.get_name() + "\n\tTelefono: "+ std.get_phone_number()
+                                + "\n\tDireccion: " + std.get_address() + "\n\tRating:"+std.get_rating();
+                        tvStdInfo.append("\n"+ stdDetail);
+                    }
+                    search.setVisibility(View.INVISIBLE);
+                    boton.setVisibility(View.INVISIBLE);
+                }
+
+
 
 
             }

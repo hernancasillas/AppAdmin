@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/splashScreenImage"
         android:layout_centerHorizontal="true"
-        android:text="Chamba"
+        android:text="Chambapp"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="#5cc5c1"
         android:textSize="@dimen/AppNameSplashScreen"

@@ -330,5 +330,45 @@ public class DBHandler extends SQLiteOpenHelper {
         return workerList;
     }
 
+    public boolean userExists(String user, String password)
+    {
+        String selectQuery = "SELECT " + KEY_USERNAME + "," + KEY_PASSWORD +  " FROM " + TABLE_USER_DETAIL
+                            + " WHERE(" + KEY_USERNAME + "='" + user + "' AND " + KEY_PASSWORD + "='" + password+"')";
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor2 = db.rawQuery(selectQuery, null);
+
+        if(cursor2.moveToFirst())
+        {
+            do{
+                return true;
+            }while(cursor2.moveToNext());
+        }
+
+        return false;
+    }
+
+    public int getUserType(String user, String password)
+    {
+        int type;
+
+        String selectQuery = "SELECT " + KEY_USER_TYPE + " FROM " + TABLE_USER_DETAIL
+                + " WHERE(" + KEY_USERNAME + "='" + user + "' AND " + KEY_PASSWORD + "='" + password+"')";
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if(cursor.moveToFirst())
+        {
+            do{
+                type = Integer.parseInt(cursor.getString(0));
+                return type;
+            }while(cursor.moveToNext());
+        }
+
+        return 0;
+    }
+
+
 
 }

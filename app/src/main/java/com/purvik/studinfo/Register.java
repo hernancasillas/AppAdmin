@@ -30,7 +30,7 @@ public class Register extends AppCompatActivity {
         final EditText phone = (EditText) findViewById(R.id.etPhone);
         final EditText email = (EditText) findViewById(R.id.etEmail);
 
-        final int userType = 1;
+        final int userType = 2;
 
 
         registrarse.setOnClickListener(new View.OnClickListener() {

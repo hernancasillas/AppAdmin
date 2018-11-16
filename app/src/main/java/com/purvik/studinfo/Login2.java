@@ -13,13 +13,15 @@ import org.w3c.dom.Text;
 
 public class Login2 extends AppCompatActivity {
 
-
+    DBHandler db;
     //final TextView registerLink = (TextView) findViewById(R.id.tvRegisterLink);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login2);
+
+        db = new DBHandler(this);
 
         final EditText username2 = (EditText) findViewById(R.id.editText3);
         final EditText password2 = (EditText) findViewById(R.id.editText4);
@@ -43,22 +45,21 @@ public class Login2 extends AppCompatActivity {
                 String username = username2.getText().toString();
                 String password = password2.getText().toString();
 
-                if(username.equals("admin") && password.equals("admin"))
+                if(db.userExists(username, password))
                 {
-                    Intent Admin = new Intent(Login2.this, MainActivity.class);
-                    startActivity(Admin);
-                }
-                else if(username.equals("usuario"))
-                {
-                    Intent User = new Intent(Login2.this, UsuarioMain.class);
-                    startActivity(User);
+                    if(db.getUserType(username, password) == 1)
+                    {
+                        Intent Admin = new Intent(Login2.this, MainActivity.class);
+                        startActivity(Admin);
+                    }
+                    else if(db.getUserType(username, password) == 2)
+                    {
+                        Intent User = new Intent(Login2.this, UsuarioMain.class);
+                        startActivity(User);
+                    }
                 }
                 else
-                {
                     Toast.makeText(getApplicationContext(),"Usuario/Contraseña Incorrectos",Toast.LENGTH_LONG).show();
-                }
-
-
             }
         });
     }
