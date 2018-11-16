@@ -17,7 +17,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
     // All Static variables
     // Database Version
-    private static final int DATABASE_VERSION = 93;
+    private static final int DATABASE_VERSION = 94;
 
     // Database Name
     private static final String DATABASE_NAME = "Chambapp";
@@ -34,6 +34,7 @@ public class DBHandler extends SQLiteOpenHelper {
     private static final String KEY_NAME = "fullName";
     private static final String KEY_PHONE_NO = "phone_number";
     private static final String KEY_ADDRESS = "address";
+    private static final String KEY_RATING = "rating";
 
     private static final String KEY_ID_JOB = "id_job";
     private static final String KEY_JOB_NAME = "job_name";
@@ -64,6 +65,7 @@ public class DBHandler extends SQLiteOpenHelper {
                 + KEY_NAME + " TEXT,"
                 + KEY_PHONE_NO + " TEXT,"
                 + KEY_ADDRESS + " TEXT,"
+                + KEY_RATING + " INTEGER,"
                 + " FOREIGN KEY(" + KEY_ID_JOB + ") REFERENCES " + TABLE_JOB_DETAIL + "(" + KEY_ID_JOB + "))";
 
         String CREATE_USER_TABLE = "CREATE TABLE " + TABLE_USER_DETAIL + "("
@@ -110,6 +112,7 @@ public class DBHandler extends SQLiteOpenHelper {
         values.put(KEY_NAME, newWorker.get_name());
         values.put(KEY_PHONE_NO, newWorker.get_phone_number());
         values.put(KEY_ADDRESS, newWorker.get_address());
+        values.put(KEY_RATING, newWorker.get_rating());
 
 
         // Inserting Row
@@ -256,5 +259,32 @@ public class DBHandler extends SQLiteOpenHelper {
 
         return 0;
     }
+
+    public String getJobName(int id)
+    {
+
+        int idJob;
+        String jobName;
+
+        String selectQuery2 = "SELECT " + KEY_JOB_NAME + " FROM " + TABLE_JOB_DETAIL + " WHERE " + KEY_ID_JOB + "=" + id ;
+
+        /*String selectQuery = "SELECT " + KEY_JOB_NAME + " FROM " + TABLE_JOB_DETAIL
+                + " INNER JOIN " + TABLE_WORKER_DETAIL + " ON " + TABLE_JOB_DETAIL
+                +"."+KEY_ID_JOB+"="+TABLE_WORKER_DETAIL+"."+ KEY_ID_JOB;*/
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery2, null);
+
+        if(cursor.moveToFirst())
+        {
+            do {
+                jobName = cursor.getString(0);
+                return jobName;
+            }while(cursor.moveToNext());
+        }
+
+        return "";
+    }
+
 
 }

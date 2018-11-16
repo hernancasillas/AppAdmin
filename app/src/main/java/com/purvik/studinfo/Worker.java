@@ -15,6 +15,15 @@ public class Worker {
     String _name;
     String _phone_number;
     String _address;
+    int _rating;
+
+    public int get_rating() {
+        return _rating;
+    }
+
+    public void set_rating(int _rating) {
+        this._rating = _rating;
+    }
 
     //empty constructor
     public Worker() {
@@ -30,11 +39,12 @@ public class Worker {
     }
 
     //three parameter Constructor
-    public Worker(int _id_job, String _name, String _phone_number, String _address) {
+    public Worker(int _id_job, String _name, String _phone_number, String _address, int _rating) {
         this._id_job = _id_job;
         this._name = _name;
         this._phone_number = _phone_number;
         this._address = _address;
+        this._rating = _rating;
     }
 
 

@@ -106,10 +106,12 @@ public class MainActivity extends AppCompatActivity implements AddStudentDialog.
 
                 List<Worker> workerList = db.getAllStudentList();	//	fetch List of BlockedNumbers form DB  method - 'getAllBlockedNumbers'
 
-                for (Worker std : workerList) {
 
-                    String stdDetail = "\n\nID: " + std.get_id()+ "\n\tJOB: " + std.get_id_job() +"\n\tNombre: " + std.get_name() + "\n\tTel: "+ std.get_phone_number()
-                            + "\n\tDir: " + std.get_address();
+
+                for (Worker std : workerList) {
+                    String jobName = db.getJobName(std.get_id_job());
+                    String stdDetail = "\n\tJOB: " + jobName +"\n\tNombre: " + std.get_name() + "\n\tTel: "+ std.get_phone_number()
+                            + "\n\tDir: " + std.get_address() + "\n\tRating:"+std.get_rating();
                     tvStdInfo.append("\n"+ stdDetail);
 
                     Log.i("TAG", stdDetail);
@@ -165,6 +167,7 @@ public class MainActivity extends AppCompatActivity implements AddStudentDialog.
 
         int idJOB = db.getIdJob(nombreEmpleo);
 
+
 //		Get Name
         EditText entName = (EditText) dialog.getDialog().findViewById(R.id.edtName);
         String name = entName.getText().toString();
@@ -188,7 +191,7 @@ public class MainActivity extends AppCompatActivity implements AddStudentDialog.
             Toast.makeText(getApplicationContext(),"Tel 10 Digitos!!!!!!",Toast.LENGTH_LONG).show();
         }else{
 
-            db.addNewWorker(new Worker(idJOB, name, phnNo, address));
+            db.addNewWorker(new Worker(idJOB, name, phnNo, address, 0));
 
             Toast.makeText(getApplicationContext(),  "Trabajador agregado",Toast.LENGTH_LONG).show();
         }

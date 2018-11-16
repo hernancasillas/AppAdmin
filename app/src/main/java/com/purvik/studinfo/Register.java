@@ -1,5 +1,6 @@
 package com.purvik.studinfo;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -29,7 +30,7 @@ public class Register extends AppCompatActivity {
         final EditText phone = (EditText) findViewById(R.id.etPhone);
         final EditText email = (EditText) findViewById(R.id.etEmail);
 
-        final int userType = 1;
+        final int userType = 2;
 
 
         registrarse.setOnClickListener(new View.OnClickListener() {
@@ -43,6 +44,9 @@ public class Register extends AppCompatActivity {
                 mail = email.getText().toString();
 
                 db.addNewUser(new Usuario(name, usuario, mail, passwd, tel, userType));
+
+                Intent intent = new Intent(Register.this, Login2.class);
+                startActivity(intent);
             }
         });
     }
