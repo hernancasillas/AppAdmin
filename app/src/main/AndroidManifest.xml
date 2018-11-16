@@ -29,7 +29,8 @@
         <activity android:name=".Table" />
         <activity android:name=".Categories2" />
         <activity android:name=".Login2" />
-        <activity android:name=".AddJobDialog"></activity>
+        <activity android:name=".AddJobDialog" />
+        <activity android:name=".UsuarioMain"></activity>
     </application>
 
 </manifest>
